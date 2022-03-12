@@ -39,7 +39,14 @@ public class BancoRebel {
                 });
         return getDetailsRebel(id);
     }
-    public void deletaCliente(UUID id) throws Exception {
+    public Rebel updateRebelLocalization(UUID id, Localization newLocalization) throws Exception {
+        BancoRebel.rebels.stream().filter(rebel -> Objects.equals(rebel.getId(),id))
+                .forEach(rebel -> {
+                    rebel.setLocalization(newLocalization);
+                });
+        return getDetailsRebel(id);
+    }
+    public void deletaRebel(UUID id) throws Exception {
         Rebel rebel = getDetailsRebel(id);
         BancoRebel.rebels.remove(rebel);
     }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,10 +28,10 @@ public class RebelService {
 
     public List<ItemRebel> genNewRebelList() {
         List<ItemRebel> items = new ArrayList<>();
-        items.add(new ItemRebel(new Item("weapon", 4 ), random.nextInt()));
-        items.add(new ItemRebel(new Item("ammunition", 3 ), random.nextInt()));
-        items.add(new ItemRebel(new Item("water", 2 ), random.nextInt()));
-        items.add(new ItemRebel(new Item("food", 1 ), random.nextInt()));
+        items.add(new ItemRebel(new Item("weapon", 4 ),ThreadLocalRandom.current().nextInt(0, 12 + 1)));
+        items.add(new ItemRebel(new Item("ammunition", 3 ), ThreadLocalRandom.current().nextInt(0, 12 + 1)));
+        items.add(new ItemRebel(new Item("water", 2 ), ThreadLocalRandom.current().nextInt(0, 12 + 1)));
+        items.add(new ItemRebel(new Item("food", 1 ), ThreadLocalRandom.current().nextInt(0, 12 + 1)));
         return items;
     }
 
