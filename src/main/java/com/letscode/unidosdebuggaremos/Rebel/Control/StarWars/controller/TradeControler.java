@@ -1,7 +1,6 @@
 package com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.controller;
 
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.Item;
-import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.ItemRebel;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

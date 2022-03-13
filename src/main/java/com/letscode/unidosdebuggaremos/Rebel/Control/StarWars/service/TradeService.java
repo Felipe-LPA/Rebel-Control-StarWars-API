@@ -44,15 +44,10 @@ public class TradeService {
         return itemRebels.get(0);
     }
     public boolean existItems(List<Item>rebelItems, List<Item>items) {
-        boolean check = true;
         for (Item item : items) {
             Item itemRebel = findItem(rebelItems, item);
-            if(itemRebel == null || (itemRebel.getItem() == item.getItem()
-                    && itemRebel.getQuantity() < item.getQuantity())) {
-                check = false;
-                break;
-            }
+            if(itemRebel == null || (itemRebel.getItem() == item.getItem() && itemRebel.getQuantity() < item.getQuantity())) return false;
         }
-        return check;
+        return true;
     }
 }

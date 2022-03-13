@@ -31,10 +31,8 @@ public class BancoRebel {
                     rebel.setName(requestRebel.getName());
                     rebel.setAge(requestRebel.getAge());
                     rebel.setGender(Gender.valueOf(requestRebel.getGender()));
-                    Localization localization = new Localization();
-                    localization.setLatitude(requestRebel.getLatitude());
-                    localization.setLatitude(requestRebel.getLongitude());
-                    localization.setGalaxy(Galaxy.valueOf(requestRebel.getPlanet()));
+                    Localization localization = new Localization(requestRebel.getLocalization().getLatitude(), requestRebel.getLocalization().getLongitude());
+                    localization.setGalaxy(requestRebel.getLocalization().getGalaxy());
                     rebel.setLocalization(localization);
                 });
         return getDetailsRebel(id);

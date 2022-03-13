@@ -13,7 +13,7 @@ public class RebelService {
 
     public Rebel registerRebel(RequestRebel requestRebel){
         List<Rebel> rebels = new ArrayList<>();
-        Localization localization = new Localization(requestRebel.getLatitude(), requestRebel.getLongitude(), Galaxy.valueOf(requestRebel.getPlanet()));
+        Localization localization = new Localization(requestRebel.getLocalization().getLatitude(), requestRebel.getLocalization().getLongitude());
 //        List<ItemRebel> items = genNewRebelList();
         List<Item> items = new ArrayList<>();
         requestRebel.getItems().forEach(item -> {
