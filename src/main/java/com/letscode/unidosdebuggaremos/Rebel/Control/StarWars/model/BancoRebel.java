@@ -34,7 +34,7 @@ public class BancoRebel {
                     Localization localization = new Localization();
                     localization.setLatitude(requestRebel.getLatitude());
                     localization.setLatitude(requestRebel.getLongitude());
-                    localization.setPlanet(Planet.valueOf(requestRebel.getPlanet()));
+                    localization.setGalaxy(Galaxy.valueOf(requestRebel.getPlanet()));
                     rebel.setLocalization(localization);
                 });
         return getDetailsRebel(id);

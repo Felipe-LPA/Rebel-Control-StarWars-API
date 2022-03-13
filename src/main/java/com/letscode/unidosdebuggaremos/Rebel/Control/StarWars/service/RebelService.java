@@ -4,11 +4,8 @@ import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.RebelControlStarWa
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.dto.RequestRebel;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 @Service
 public class RebelService {
@@ -16,8 +13,12 @@ public class RebelService {
 
     public Rebel registerRebel(RequestRebel requestRebel){
         List<Rebel> rebels = new ArrayList<>();
-        Localization localization = new Localization(requestRebel.getLatitude(), requestRebel.getLongitude(), Planet.valueOf(requestRebel.getPlanet()));
-        List<ItemRebel> items = genNewRebelList();
+        Localization localization = new Localization(requestRebel.getLatitude(), requestRebel.getLongitude(), Galaxy.valueOf(requestRebel.getPlanet()));
+//        List<ItemRebel> items = genNewRebelList();
+        List<Item> items = new ArrayList<>();
+        requestRebel.getItems().forEach(item -> {
+            items.add(new Item(new ItemRebel(item.getItemName()), item.getItemQuantity()));
+        });
         Rebel rebel = new Rebel(UUID.randomUUID(), requestRebel.getName(), requestRebel.getAge(),
                 Gender.valueOf(requestRebel.getGender()),
                 localization, items, 0);
@@ -26,14 +27,14 @@ public class RebelService {
         return rebel;
     }
 
-    public List<ItemRebel> genNewRebelList() {
-        List<ItemRebel> items = new ArrayList<>();
-        items.add(new ItemRebel(new Item("weapon", 4 ),ThreadLocalRandom.current().nextInt(0, 12 + 1)));
-        items.add(new ItemRebel(new Item("ammunition", 3 ), ThreadLocalRandom.current().nextInt(0, 12 + 1)));
-        items.add(new ItemRebel(new Item("water", 2 ), ThreadLocalRandom.current().nextInt(0, 12 + 1)));
-        items.add(new ItemRebel(new Item("food", 1 ), ThreadLocalRandom.current().nextInt(0, 12 + 1)));
-        return items;
-    }
+//    public List<ItemRebel> genNewRebelList() {
+//        List<ItemRebel> items = new ArrayList<>();
+//        items.add(new ItemRebel(new Item("weapon", 4 ),ThreadLocalRandom.current().nextInt(0, 12 + 1)));
+//        items.add(new ItemRebel(new Item("ammunition", 3 ), ThreadLocalRandom.current().nextInt(0, 12 + 1)));
+//        items.add(new ItemRebel(new Item("water", 2 ), ThreadLocalRandom.current().nextInt(0, 12 + 1)));
+//        items.add(new ItemRebel(new Item("food", 1 ), ThreadLocalRandom.current().nextInt(0, 12 + 1)));
+//        return items;
+//    }
 
     public List<Rebel> getRebels(){
         return RebelControlStarWarsApplication.bancoRebel.getRebels();

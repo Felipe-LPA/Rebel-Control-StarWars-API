@@ -1,9 +1,6 @@
 package com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.dto;
 
-import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.Gender;
-import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.ItemRebel;
-import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.Localization;
-import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.Rebel;
+import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +18,7 @@ public class ResponseRebel {
     private int age;
     private Gender gender;
     private Localization localization;
-    private List<ItemRebel> items;
+    private List<Item> items;
 
     public ResponseRebel(Rebel rebel){
         this.id = rebel.getId();

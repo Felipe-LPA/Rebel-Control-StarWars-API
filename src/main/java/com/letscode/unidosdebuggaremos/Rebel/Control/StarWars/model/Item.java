@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Item {
-    private String name;
-    private int value;
+    private ItemRebel item;
+    private int quantity;
 }

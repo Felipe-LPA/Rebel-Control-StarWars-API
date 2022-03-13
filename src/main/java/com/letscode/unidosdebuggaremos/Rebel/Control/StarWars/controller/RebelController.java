@@ -5,7 +5,7 @@ import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.dto.ResponseRebel;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.ItemRebel;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.Rebel;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.service.RebelService;
-import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.service.TradeService;
+//import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

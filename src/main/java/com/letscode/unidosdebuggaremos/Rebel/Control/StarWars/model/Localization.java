@@ -12,5 +12,27 @@ import lombok.Setter;
 public class Localization {
     private double latitude;
     private double longitude;
-    private Planet planet;
+    private Galaxy galaxy;
+
+    public Localization(double latitude, double longitude){
+        if (latitude <= 10 && longitude <= 10){
+            this.galaxy = Galaxy.Bespin;
+        } else if(latitude <= 10 && longitude > 10 && longitude <= 20) {
+
+        } else if(latitude <= 10 && longitude > 20 && longitude <= 30){
+
+        } else if(latitude > 10 && latitude <= 20 && longitude <= 10){
+
+        } else if(latitude > 10 && latitude <= 20 && longitude > 10 && longitude <= 20){
+
+        } else if(latitude > 10 && latitude <= 20 && longitude > 20 && longitude <= 30){
+
+        } else if(latitude > 20 && latitude <= 30 && longitude <= 10) {
+
+        } else if(latitude > 20 && latitude <= 30 && longitude > 10 && longitude <= 20){
+
+        } else if(latitude > 20 && latitude <= 30 && longitude > 20 && longitude <= 30){
+
+        }
+    }
 }

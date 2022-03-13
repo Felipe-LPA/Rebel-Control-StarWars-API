@@ -16,7 +16,7 @@ public class Rebel {
     private int age;
     private Gender gender;
     private Localization localization;
-    private List<ItemRebel> items;
+    private List<Item> items;
     private int reportedAsTraitor = 0;
 
     public boolean reportBetrayal() {

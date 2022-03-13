@@ -1,10 +1,10 @@
 package com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.dto;
 
-import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.Gender;
-import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.Localization;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,5 +15,6 @@ public class RequestRebel {
     private String gender;
     private double latitude;
     private double longitude;
-    private String planet;
+//    private String planet;
+    private List<RequestItem> items;
 }

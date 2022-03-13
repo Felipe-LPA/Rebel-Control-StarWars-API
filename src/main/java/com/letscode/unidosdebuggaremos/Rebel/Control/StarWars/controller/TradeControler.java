@@ -1,5 +1,6 @@
 package com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.controller;
 
+import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.Item;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.ItemRebel;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,9 @@ public class TradeControler {
     @PostMapping("/trade")
     public boolean changeItems(
             @PathVariable UUID rebelAId,
-            @PathVariable List<ItemRebel> itemsA,
+            @PathVariable List<Item> itemsA,
             @PathVariable UUID rebelBId,
-            @PathVariable List<ItemRebel> itemsB
+            @PathVariable List<Item> itemsB
     ) throws Exception {
         return tradeService.changeItems(rebelAId, itemsA, rebelBId, itemsB);
     }
