@@ -13,8 +13,7 @@ public class RebelService {
 
     public Rebel registerRebel(RequestRebel requestRebel){
         List<Rebel> rebels = new ArrayList<>();
-        Localization localization = new Localization(requestRebel.getLocalization().getLatitude(), requestRebel.getLocalization().getLongitude());
-//        List<ItemRebel> items = genNewRebelList();
+        Localization localization = new Localization(requestRebel.getLatitude(), requestRebel.getLongitude());
         List<Item> items = new ArrayList<>();
         requestRebel.getItems().forEach(item -> {
             items.add(new Item(new ItemRebel(item.getItemName()), item.getItemQuantity()));
@@ -26,15 +25,6 @@ public class RebelService {
         RebelControlStarWarsApplication.bancoRebel.addRebel(rebel);
         return rebel;
     }
-
-//    public List<ItemRebel> genNewRebelList() {
-//        List<ItemRebel> items = new ArrayList<>();
-//        items.add(new ItemRebel(new Item("weapon", 4 ),ThreadLocalRandom.current().nextInt(0, 12 + 1)));
-//        items.add(new ItemRebel(new Item("ammunition", 3 ), ThreadLocalRandom.current().nextInt(0, 12 + 1)));
-//        items.add(new ItemRebel(new Item("water", 2 ), ThreadLocalRandom.current().nextInt(0, 12 + 1)));
-//        items.add(new ItemRebel(new Item("food", 1 ), ThreadLocalRandom.current().nextInt(0, 12 + 1)));
-//        return items;
-//    }
 
     public List<Rebel> getRebels(){
         return RebelControlStarWarsApplication.bancoRebel.getRebels();

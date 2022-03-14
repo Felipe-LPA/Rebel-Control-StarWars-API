@@ -1,12 +1,10 @@
 package com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.controller;
 
+import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.dto.RequestTrade;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.Item;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.service.TradeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,13 +16,10 @@ public class TradeControler {
     @Autowired
     private TradeService tradeService;
 
-    @PostMapping("/trade")
+    @PatchMapping()
     public boolean changeItems(
-            @PathVariable UUID rebelAId,
-            @PathVariable List<Item> itemsA,
-            @PathVariable UUID rebelBId,
-            @PathVariable List<Item> itemsB
-    ) throws Exception {
-        return tradeService.changeItems(rebelAId, itemsA, rebelBId, itemsB);
+            @RequestBody RequestTrade requestTrade
+            ) throws Exception {
+        return tradeService.changeItems(requestTrade.getRebelIdA(),requestTrade.getRebelItensA(), requestTrade.getRebelIdB(), requestTrade.getRebelItensB());
     }
 }

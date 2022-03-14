@@ -43,18 +43,19 @@ public class RebelController {
         return ResponseEntity.ok(new ResponseRebel(rebelService.getDetailsRebel(id)));
     }
 
-    @PostMapping("/reportAsTraitor/{id}")
-    public boolean reportAsTraitor(
-            @PathVariable UUID rebelId
+    @PatchMapping("/reportAsTraitor/{id}")
+    public ResponseEntity<String> reportAsTraitor(
+            @PathVariable UUID id
     ) throws Exception {
-        return rebelService.addBetrayal(rebelId);
+                rebelService.addBetrayal(id);
+        return ResponseEntity.ok("Reported");
     }
 
     @GetMapping("/isTraitor/{id}")
     public boolean isTraitor(
-            @PathVariable UUID rebelId
+            @PathVariable UUID id
     ) throws Exception {
-        return rebelService.isTraitor(rebelId);
+        return rebelService.isTraitor(id);
     }
 
 }

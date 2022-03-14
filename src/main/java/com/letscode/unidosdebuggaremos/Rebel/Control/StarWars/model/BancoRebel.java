@@ -16,10 +16,10 @@ public class BancoRebel {
     }
 
     public Rebel getDetailsRebel(UUID id) throws Exception {
-        Optional<Rebel> resultCliente =
+        Optional<Rebel> resultRebel =
                 BancoRebel.rebels.stream().filter(rebel -> Objects.equals(rebel.getId(),id)).findAny();
-        if(resultCliente.isPresent()){
-            return resultCliente.get();
+        if(resultRebel.isPresent()){
+            return resultRebel.get();
         } else {
             throw new Exception("Rebel not found!");
         }
@@ -31,8 +31,7 @@ public class BancoRebel {
                     rebel.setName(requestRebel.getName());
                     rebel.setAge(requestRebel.getAge());
                     rebel.setGender(Gender.valueOf(requestRebel.getGender()));
-                    Localization localization = new Localization(requestRebel.getLocalization().getLatitude(), requestRebel.getLocalization().getLongitude());
-                    localization.setGalaxy(requestRebel.getLocalization().getGalaxy());
+                    Localization localization = new Localization(requestRebel.getLatitude(), requestRebel.getLongitude());
                     rebel.setLocalization(localization);
                 });
         return getDetailsRebel(id);

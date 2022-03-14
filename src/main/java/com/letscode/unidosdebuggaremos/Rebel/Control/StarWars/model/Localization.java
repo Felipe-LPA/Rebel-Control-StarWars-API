@@ -17,6 +17,6 @@ public class Localization {
     public Localization(double latitude, double longitude){
         this.latitude = latitude;
         this.longitude = longitude;
-        this.galaxy = this.galaxy.getGalaxy(latitude, longitude);
+        this.galaxy = Galaxy.getGalaxy(latitude, longitude);
     }
 }

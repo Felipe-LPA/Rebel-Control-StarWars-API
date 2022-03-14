@@ -10,4 +10,9 @@ import lombok.Setter;
 public class Item {
     private ItemRebel item;
     private int quantity;
+
+    public int itemTotalValue(){
+    return this.quantity * this.item.getValue();
+    }
 }
+
