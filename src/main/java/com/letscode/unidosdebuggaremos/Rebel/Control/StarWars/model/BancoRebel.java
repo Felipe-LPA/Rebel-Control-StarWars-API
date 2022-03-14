@@ -3,6 +3,7 @@ package com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.dto.RequestRebel;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class BancoRebel {
@@ -51,5 +52,49 @@ public class BancoRebel {
     public void removeRebel(UUID id) throws Exception {
         Rebel rebel = getDetailsRebel(id);
         BancoRebel.rebels.remove(rebel);
+    }
+    public GeneralReport getGeneralReport(){
+        List<Rebel> notTraitors = getRebels();
+        int Totalregistered = getQuantityRebelAndTraitor();
+        String percentegeRebel = (notTraitors.size() * 100 / Totalregistered) + "%" ;
+        String percentegeTraitors = (((Totalregistered - notTraitors.size()) * 100) / Totalregistered) + "%";;
+        AvgItemsQuantity avgItemsQuantity = getAvgItemsQuantity(notTraitors);
+        int lostPoints = getLostPoints();
+
+        return new GeneralReport(percentegeRebel,percentegeTraitors, avgItemsQuantity, lostPoints);
+    }
+    private AvgItemsQuantity getAvgItemsQuantity(List<Rebel> notTraitors){
+        AvgItemsQuantity avgItemsQuantity = new AvgItemsQuantity(0,0,0,0);
+        notTraitors.forEach(rebel -> {
+            rebel.getItems().forEach(item -> {
+                String itemName = item.getItem().getItem();
+                int quantity = item.getQuantity();
+                if(Objects.equals(itemName, "weapon")){
+                    avgItemsQuantity.setAvgWeapon(quantity);
+                }
+                if(Objects.equals(itemName, "ammunition")){
+                    avgItemsQuantity.setAvgAmmunition(quantity);
+                }
+                if(Objects.equals(itemName, "water")){
+                    avgItemsQuantity.setAvgWater(quantity);
+                }
+                if(Objects.equals(itemName, "food")){
+                    avgItemsQuantity.setAvgFood(quantity);
+                }
+            });
+        });
+        avgItemsQuantity.setAvg(notTraitors.size());
+        return avgItemsQuantity;
+    }
+    private int getLostPoints(){
+        AtomicInteger traitorItens = new AtomicInteger();
+        rebels.forEach(rebel -> {
+            if (rebel.isTraitor()){
+            rebel.getItems().forEach(item -> {
+                traitorItens.addAndGet(item.getQuantity() * item.getItem().getValue());
+            });
+            }
+        });
+        return traitorItens.get();
     }
 }

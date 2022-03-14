@@ -48,10 +48,8 @@ public class RebelService {
         return rebel.isTraitor();
     }
     public GeneralReport getGeneralReport(){
-        int Totalregistered = RebelControlStarWarsApplication.bancoRebel.getQuantityRebelAndTraitor();
-        int TotalRebelsRegistered = RebelControlStarWarsApplication.bancoRebel.getRebels().size();
-        int TotalTraitorsRegistered = Totalregistered - TotalRebelsRegistered;
+        GeneralReport generalReport = RebelControlStarWarsApplication.bancoRebel.getGeneralReport();
 
-        return new GeneralReport("algo", "algo2", new AvgItemsQuantity(2.1, 3.2, 2.3, 1.2), 5);
+        return generalReport;
     }
 }
