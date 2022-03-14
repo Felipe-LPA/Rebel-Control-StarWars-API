@@ -2,6 +2,7 @@ package com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.service;
 
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.RebelControlStarWarsApplication;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.dto.RequestRebel;
+import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.GeneralReport;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.*;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,6 @@ import java.util.*;
 
 @Service
 public class RebelService {
-    Random random = new Random();
 
     public Rebel registerRebel(RequestRebel requestRebel){
         List<Rebel> rebels = new ArrayList<>();
@@ -36,6 +36,9 @@ public class RebelService {
     public Rebel updateRebel(UUID id, RequestRebel requestRebel) throws Exception {
         return RebelControlStarWarsApplication.bancoRebel.updateRebel(id, requestRebel);
     }
+    public Rebel updateRebelLocalization(UUID id, double latitude, double longitude) throws Exception {
+        return RebelControlStarWarsApplication.bancoRebel.updateRebelLocalization(id, latitude, longitude);
+    }
     public boolean addBetrayal(UUID rebelId) throws Exception {
         Rebel rebel = RebelControlStarWarsApplication.bancoRebel.getDetailsRebel(rebelId);
         return rebel.reportBetrayal();
@@ -43,5 +46,12 @@ public class RebelService {
     public boolean isTraitor(UUID rebelId) throws Exception {
         Rebel rebel = RebelControlStarWarsApplication.bancoRebel.getDetailsRebel(rebelId);
         return rebel.isTraitor();
+    }
+    public GeneralReport getGeneralReport(){
+        int Totalregistered = RebelControlStarWarsApplication.bancoRebel.getQuantityRebelAndTraitor();
+        int TotalRebelsRegistered = RebelControlStarWarsApplication.bancoRebel.getRebels().size();
+        int TotalTraitorsRegistered = Totalregistered - TotalRebelsRegistered;
+
+        return new GeneralReport("algo", "algo2", new AvgItemsQuantity(2.1, 3.2, 2.3, 1.2), 5);
     }
 }

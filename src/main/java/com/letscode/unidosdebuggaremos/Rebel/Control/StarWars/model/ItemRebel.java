@@ -22,7 +22,7 @@ public class ItemRebel {
     public int whichValueItem(){
         if(Objects.equals(this.item, "weapon")){
             return 4;
-        }else if(Objects.equals(this.item, "ammunation")){
+        }else if(Objects.equals(this.item, "ammunition")){
             return 3;
         }else if(Objects.equals(this.item, "water")){
             return 2;

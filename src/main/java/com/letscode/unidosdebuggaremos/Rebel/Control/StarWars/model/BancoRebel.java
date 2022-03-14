@@ -3,6 +3,7 @@ package com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.dto.RequestRebel;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BancoRebel {
     private static List<Rebel> rebels = new ArrayList<>();
@@ -10,9 +11,13 @@ public class BancoRebel {
     public void addRebel(Rebel rebel){
         BancoRebel.rebels.add(rebel);
     }
-
+    public int getQuantityRebelAndTraitor(){
+        return rebels.size();
+    }
     public List<Rebel> getRebels(){
-        return BancoRebel.rebels;
+         new ArrayList<>();
+        List<Rebel> notTraitors = rebels.stream().filter(rebel -> !rebel.isTraitor()).collect(Collectors.toList());
+        return notTraitors;
     }
 
     public Rebel getDetailsRebel(UUID id) throws Exception {
@@ -36,14 +41,14 @@ public class BancoRebel {
                 });
         return getDetailsRebel(id);
     }
-    public Rebel updateRebelLocalization(UUID id, Localization newLocalization) throws Exception {
+    public Rebel updateRebelLocalization(UUID id, double latitude, double longitude) throws Exception {
         BancoRebel.rebels.stream().filter(rebel -> Objects.equals(rebel.getId(),id))
                 .forEach(rebel -> {
-                    rebel.setLocalization(newLocalization);
+                    rebel.setLocalization(new Localization(latitude, longitude));
                 });
         return getDetailsRebel(id);
     }
-    public void deletaRebel(UUID id) throws Exception {
+    public void removeRebel(UUID id) throws Exception {
         Rebel rebel = getDetailsRebel(id);
         BancoRebel.rebels.remove(rebel);
     }

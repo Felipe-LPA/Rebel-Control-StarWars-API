@@ -1,8 +1,10 @@
 package com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.controller;
 
+import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.RebelControlStarWarsApplication;
+import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.dto.RequestLocalization;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.dto.RequestRebel;
+import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.GeneralReport;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.dto.ResponseRebel;
-import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.ItemRebel;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.Rebel;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.service.RebelService;
 //import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.service.TradeService;
@@ -43,7 +45,7 @@ public class RebelController {
         return ResponseEntity.ok(new ResponseRebel(rebelService.getDetailsRebel(id)));
     }
 
-    @PatchMapping("/reportAsTraitor/{id}")
+    @PatchMapping("/report-as-traitor/{id}")
     public ResponseEntity<String> reportAsTraitor(
             @PathVariable UUID id
     ) throws Exception {
@@ -51,11 +53,36 @@ public class RebelController {
         return ResponseEntity.ok("Reported");
     }
 
-    @GetMapping("/isTraitor/{id}")
-    public boolean isTraitor(
-            @PathVariable UUID id
-    ) throws Exception {
-        return rebelService.isTraitor(id);
+//    @GetMapping("/isTraitor/{id}")
+//    public boolean isTraitor(
+//            @PathVariable UUID id
+//    ) throws Exception {
+//        return rebelService.isTraitor(id);
+//    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseRebel> updateRebel(@PathVariable UUID id, @RequestBody RequestRebel requestRebel) throws Exception {
+        Rebel rebel = rebelService.updateRebel(id, requestRebel);
+        return ResponseEntity.ok(new ResponseRebel(rebel));
     }
+    @PatchMapping("/{id}")
+    public ResponseEntity<ResponseRebel> updateLocalizationRebel(@PathVariable UUID id, @RequestBody RequestLocalization requestLocalization) throws Exception {
+        Rebel rebel = rebelService.updateRebelLocalization(id, requestLocalization.getLatitude(), requestLocalization.getLongitude());
+        return ResponseEntity.ok(new ResponseRebel(rebel));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity removeRebel(@PathVariable UUID id) throws Exception {
+        RebelControlStarWarsApplication.bancoRebel.removeRebel(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/general-report")
+    public ResponseEntity<GeneralReport> generalReport(){
+    GeneralReport generalReport = rebelService.getGeneralReport();
+    return ResponseEntity.ok(generalReport);
+    }
+
+
 
 }
