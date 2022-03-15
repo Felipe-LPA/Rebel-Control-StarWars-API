@@ -30,10 +30,9 @@ public class TradeService {
             itemsB.add(new Item(new ItemRebel(item.getItemName()), item.getItemQuantity()));
         });
 
-        if(
-                !compatibleItensToTrade(itemsA, itemsB)
-                || !existItems(rebelA.getItems(), itemsA)
-                || !existItems(rebelB.getItems(), itemsB)
+        if(     !compatibleItensToTrade(itemsA, itemsB)
+                || !existItems(rebelA.getItems(), itemsB)
+                || !existItems(rebelB.getItems(), itemsA)
         ) return false;
 
         tradeItems(rebelA.getItems(), rebelB.getItems(), itemsA);
@@ -64,13 +63,21 @@ public class TradeService {
         itemRebel.setQuantity(qnt+item.getQuantity());
     }
     public Item findItem(List<Item> rebelItems, Item item) {
-        List<Item> itemRebels = rebelItems.stream().filter(ir -> ir.getItem() == item.getItem()).collect(Collectors.toList());
-        return itemRebels.get(0);
+        for (Item rebelItem : rebelItems) {
+            if (
+                    rebelItem != null && rebelItem.getItem() != null &&
+                    rebelItem.getItem().getItem().equals(item.getItem().getItem()) &&
+                    rebelItem.getQuantity() > 0
+            ) {
+                return rebelItem;
+            }
+        }
+        return null;
     }
     public boolean existItems(List<Item>rebelItems, List<Item>items) {
         for (Item item : items) {
             Item itemRebel = findItem(rebelItems, item);
-            if(itemRebel == null || (itemRebel.getItem() == item.getItem() && itemRebel.getQuantity() < item.getQuantity())) return false;
+            if(itemRebel == null || itemRebel.getItem() == null || itemRebel.getQuantity() == 0 || (itemRebel.getItem().getItem().equals(item.getItem().getItem()) && itemRebel.getQuantity() < item.getQuantity())) return false;
         }
         return true;
     }
