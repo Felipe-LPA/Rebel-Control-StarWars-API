@@ -1,6 +1,7 @@
 package com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model;
 
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.dto.RequestRebel;
+import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.exceptions.NotFoundException;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,13 +22,13 @@ public class BancoRebel {
         return notTraitors;
     }
 
-    public Rebel getDetailsRebel(UUID id) throws Exception {
+    public Rebel getDetailsRebel(UUID id) throws NotFoundException {
         Optional<Rebel> resultRebel =
                 BancoRebel.rebels.stream().filter(rebel -> Objects.equals(rebel.getId(),id)).findAny();
         if(resultRebel.isPresent()){
             return resultRebel.get();
         } else {
-            throw new Exception("Rebel not found!");
+            throw new NotFoundException("Rebel not found!");
         }
     }
 

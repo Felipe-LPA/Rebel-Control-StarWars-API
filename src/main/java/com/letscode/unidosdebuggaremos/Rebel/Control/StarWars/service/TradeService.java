@@ -2,6 +2,8 @@ package com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.service;
 
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.RebelControlStarWarsApplication;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.dto.RequestItem;
+import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.exceptions.NotFoundException;
+import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.exceptions.TradeException;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.Item;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.ItemRebel;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.model.Rebel;
@@ -15,8 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class TradeService {
-
-    public boolean changeItems(UUID rebelAId, List<RequestItem> requestItemsA, UUID rebelBId, List<RequestItem> requestItemsB) throws Exception {
+    public void changeItems(UUID rebelAId, List<RequestItem> requestItemsA, UUID rebelBId, List<RequestItem> requestItemsB) throws TradeException, NotFoundException {
         Rebel rebelA = RebelControlStarWarsApplication.bancoRebel.getDetailsRebel(rebelAId);
         Rebel rebelB = RebelControlStarWarsApplication.bancoRebel.getDetailsRebel(rebelBId);
 
@@ -30,21 +31,20 @@ public class TradeService {
             itemsB.add(new Item(new ItemRebel(item.getItemName()), item.getItemQuantity()));
         });
 
-        if(     !compatibleItensToTrade(itemsA, itemsB)
-                || !existItems(rebelA.getItems(), itemsB)
-                || !existItems(rebelB.getItems(), itemsA)
-        ) return false;
+        compatibleItensToTrade(itemsA, itemsB);
+        existItems(rebelA.getItems(), itemsB);
+        existItems(rebelB.getItems(), itemsA);
 
         tradeItems(rebelA.getItems(), rebelB.getItems(), itemsA);
         tradeItems(rebelB.getItems(), rebelA.getItems(), itemsB);
-        return true;
     }
-    public Boolean compatibleItensToTrade(List<Item> itemsA, List<Item> itemsB){
+    public void compatibleItensToTrade(List<Item> itemsA, List<Item> itemsB) throws TradeException {
         AtomicInteger itemsAvalue = new AtomicInteger();
         itemsA.forEach(item -> itemsAvalue.addAndGet(item.itemTotalValue()));
         AtomicInteger itemsBvalue = new AtomicInteger();
         itemsB.forEach(item -> itemsBvalue.addAndGet(item.itemTotalValue()));
-        return itemsAvalue.intValue() == itemsBvalue.intValue();
+        boolean compatible = itemsAvalue.intValue() == itemsBvalue.intValue();
+        if (!compatible) throw new TradeException("Insuficient value to trade");
     }
     public void tradeItems(List<Item> buyerItems, List<Item>sellerItems, List<Item> items) {
         for (Item item : items) {
@@ -74,11 +74,11 @@ public class TradeService {
         }
         return null;
     }
-    public boolean existItems(List<Item>rebelItems, List<Item>items) {
+    public void existItems(List<Item>rebelItems, List<Item>items) throws TradeException {
         for (Item item : items) {
             Item itemRebel = findItem(rebelItems, item);
-            if(itemRebel == null || itemRebel.getItem() == null || itemRebel.getQuantity() == 0 || (itemRebel.getItem().getItem().equals(item.getItem().getItem()) && itemRebel.getQuantity() < item.getQuantity())) return false;
+            if(itemRebel == null || itemRebel.getItem() == null || itemRebel.getQuantity() == 0 ||
+                    (itemRebel.getItem().getItem().equals(item.getItem().getItem()) && itemRebel.getQuantity() < item.getQuantity())) throw new TradeException("Insuficient value to trade");
         }
-        return true;
     }
 }

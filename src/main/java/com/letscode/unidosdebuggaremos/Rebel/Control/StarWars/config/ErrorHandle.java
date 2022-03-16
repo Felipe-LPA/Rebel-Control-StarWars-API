@@ -1,5 +1,7 @@
 package com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.config;
 
+import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.exceptions.NotFoundException;
+import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.exceptions.TradeException;
 import com.letscode.unidosdebuggaremos.Rebel.Control.StarWars.exceptions.ValidationError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -31,5 +33,17 @@ public class ErrorHandle {
             errors.add(error);
         });
         return  errors;
+    }
+
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public String NotFoundHandler(NotFoundException exception){
+        return exception.getMessage();
+    }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(TradeException.class)
+    public String TradeErrorHandler(TradeException exception){
+        return exception.getMessage();
     }
 }
